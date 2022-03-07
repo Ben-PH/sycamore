@@ -142,8 +142,8 @@ where
         if TypeId::of::<G>() == TypeId::of::<crate::SsrNode>() {
             // If Server Side Rendering, insert beginning tag for hydration purposes.
             self.element.append_child(&G::marker_with_text("#"));
-            // Create end marker. This is needed to make sure that the node is inserted into the right
-            // place.
+            // Create end marker. This is needed to make sure that the node is inserted into the
+            // right place.
             let end_marker = G::marker_with_text("/");
             self.element.append_child(&end_marker);
             render::insert(
@@ -151,8 +151,8 @@ where
                 View::new_dyn(child),
                 None,
                 Some(&end_marker),
-                true, /* We don't know if this is the only child or not so we pessimistically set
-                       * this to true. */
+                true, /* We don't know if this is the only child or not so we pessimistically
+                       * set this to true. */
             );
             return self;
         }
@@ -172,8 +172,8 @@ where
                 View::new_dyn(child),
                 initial,
                 None,
-                true, /* We don't know if this is the only child or not so we pessimistically set
-                       * this to true. */
+                true, /* We don't know if this is the only child or not so we pessimistically
+                       * set this to true. */
             );
             return self;
         }
@@ -293,7 +293,12 @@ where
 
         self
     }
-
+    /// Set the inner html of the element using
+    /// [generic_node::GenericNode::dangerously_set_inner_html].
+    pub fn inner_html<'a>(&self, html: impl AsRef<str> + 'a) -> &Self {
+        self.element.dangerously_set_inner_html(html.as_ref());
+        &self
+    }
     /// Set a boolean attribute on the node.
     ///
     /// # Example

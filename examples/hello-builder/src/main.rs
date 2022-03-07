@@ -20,7 +20,14 @@ fn app() -> View<G> {
                 .text("!")
                 .build(),
         )
-        .child(input().bind_value(name).build())
+        .child(input().bind_value(name.clone()).build())
+        .child(
+            button()
+                .inner_html(include_str!("./backspace_black_24dp.svg"))
+                .text("Clear")
+                .on("click", move |_| name.set("".to_string()))
+                .build(),
+        )
         .build()
 }
 
